@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "task-list-fa51e": {
+      "hosting": {
+        "task-list": [
+          "task-list-fa51e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "task-list-fa51e"
+  }
+}

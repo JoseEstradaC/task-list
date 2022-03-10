@@ -1,0 +1,84 @@
+<p-toast></p-toast>
+
+<p-toolbar>
+      <p-button (onClick)="displayNotaForm = true; formButtonText = 'Crear tarea'" label="New" icon="pi pi-plus"></p-button>
+</p-toolbar>
+
+<p-contextMenu #cm [model]="items"></p-contextMenu>
+<div class="card">
+    <p-table [value]="(notas | async)!" [(contextMenuSelection)]="notaSelecionada" [contextMenu]="cm" dataKey="code" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-nota>
+            <tr [pContextMenuRow]="nota">
+                <td>{{nota.titulo}}</td>
+                <td>{{nota.descripcion}}</td>
+                <td>
+                  <i *ngIf="nota.estado" class="pi pi-check"></i>
+                  <i *ngIf="!nota.estado" class="pi pi-times"></i>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="displayNotaForm" [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+    <h3>Añadir nota</h3>
+  </ng-template>
+
+  <form [formGroup]="NotaForm" (ngSubmit)="formSubmit()">
+    
+    <div class="card">
+      <div class="field">
+        <label for="titulo">titulo: </label>
+        <input
+          id="titulo"
+          type="text"
+          formControlName="titulo"
+          class="inputfield w-full">
+      </div>
+      <div class="field">
+        <label for="descripcion">descripcion: </label>
+        <input
+          id="descripcion"
+          type="text"
+          formControlName="descripcion"
+        class="inputfield w-full"/>
+      </div>
+      <div class="field">
+        <label for="estado">estado: </label>
+        <input
+          id="estado"
+          type="checkbox"
+          formControlName="estado"
+        class="inputfield w-full"/>
+      </div>
+  </div>
+  
+    <p-footer>
+
+      <br>
+      <p-button
+        id="espacio"
+        type="submit"
+        [label]="formButtonText"
+        styleClass="p-button-success">
+      </p-button>
+
+
+      <p-button (click)="displayNotaForm = false"
+        label="Cancelar"
+        styleClass="p-button-danger">
+      </p-button>
+
+    </p-footer>
+
+  </form>
+
+</p-dialog>
